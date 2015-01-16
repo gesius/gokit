@@ -24,43 +24,43 @@ var (
 )
 
 // Globals returns an Object given name. Returns nil if the Object does not exist.
-func (g *Globals) Object(name string) *interface{} {
+func (g *Globals) Object(name string) (*interface{}, bool) {
 	if g == nil {
-		return nil
+		return nil, false
 	}
-	return r.objects.value()
+	return g.r.object(name)
 }
 
 // Globals returns an Command given name. Returns nil if the Command does not exist.
-func (g *Globals) Commmand(name string) func() interface{} {
+func (g *Globals) Commmand(name string) (func() interface{}, bool) {
 	if g == nil {
-		return nil
+		return nil, false
 	}
-	return g.commands.value()
+	return g.r.command(name)
 }
 
 // Globals returns an Command given name. Returns nil if the Command does not exist.
-func (g *Globals) Option(name string) func() interface{} {
+func (g *Globals) Option(name string) (func() interface{}, bool) {
 	if g == nil {
-		return nil
+		return nil, false
 	}
-	return g.options.value()
+	return g.r.option(name)
 }
 
 // Globals returns an Command given name. Returns nil if the Command does not exist.
-func (g *Globals) Topic(name string) *topic.Topic {
+func (g *Globals) Topic(name string) (*topic.Topic, bool) {
 	if g == nil {
-		return nil
+		return nil, false
 	}
-	return g.topics.value()
+	return g.r.topic(name)
 }
 
 type registry struct {
 	sync.Mutex // protects entries from concurrent mutation
-	objects    map[string]interface{}
+	objects    map[string]*interface{}
 	commands   map[string]func() interface{}
 	options    map[string]func() interface{}
-	topics     map[string]func() interface{}
+	topics     map[string]*topic.Topic
 }
 
 func (r *registry) addobject(key string, o *interface{}) {
@@ -111,14 +111,26 @@ func (r *registry) option(key string) (func() interface{}, bool) {
 func (r *registry) topic(key string) (*topic.Topic, bool) {
 	r.Lock()
 	defer r.Unlock()
-	f, ok := r.objects[key]
+	f, ok := r.topics[key]
 	return f, ok
 }
 
 func (r *registry) keys() (k []string) {
 	r.Lock()
 	defer r.Unlock()
-	for e := range r.entries {
+	for e := range r.objects {
+		k = append(k, e)
+	}
+
+	for e := range r.commands {
+		k = append(k, e)
+	}
+
+	for e := range r.options {
+		k = append(k, e)
+	}
+
+	for e := range r.topics {
 		k = append(k, e)
 	}
 	return
