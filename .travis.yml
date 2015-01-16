@@ -14,11 +14,9 @@ before_install:
   - go install -race std
   - go get -v golang.org/x/tools/cmd/cover
   - go get github.com/kr/godep
-  - export PATH=$HOME/gopath/bin:$PATH
-  - export GOPATH=`godep path`:$GOPATH
 
 install:
-  - godep restore
+  - export PATH=$HOME/gopath/bin:$PATH
 
 script:
   - go test
