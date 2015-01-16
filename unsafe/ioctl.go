@@ -12,7 +12,7 @@ type IOCTL struct{}
 
 // Public interface.
 func Run(fd uintptr, request int, status *int) error {
-	return ioctl(fd, request, uintptr(unsafe.Pointer(status)))
+	return &IOCTL().ioctl(fd, request, uintptr(unsafe.Pointer(status)))
 }
 
 //Native method call

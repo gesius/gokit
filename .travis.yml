@@ -17,6 +17,7 @@ before_install:
 
 install:
   - export PATH=$HOME/gopath/bin:$PATH
+  - go build ./...
 
 script:
   - go test ./...
