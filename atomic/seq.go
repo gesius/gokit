@@ -1,4 +1,4 @@
-package seq
+package atomic
 
 import (
 	"sync/atomic"
