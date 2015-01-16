@@ -1,6 +1,10 @@
 // Package unsafe implements wrapper for unsafe low level functions.
 //
 // For a higher level interface please use the github.com/pkg/term package.
+
+// build linux
+// +build ignore
+
 package unsafe
 
 import (
@@ -12,7 +16,8 @@ type IOCTL struct{}
 
 // Public interface.
 func Run(fd uintptr, request int, status *int) error {
-	return &IOCTL().ioctl(fd, request, uintptr(unsafe.Pointer(status)))
+	i := &IOCTL{}
+	return i.ioctl(fd, request, uintptr(unsafe.Pointer(status)))
 }
 
 //Native method call
