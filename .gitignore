@@ -1,0 +1,8 @@
+.deps
+.libs
+.dirstamp
+*.la
+*.lo
+*.o
+*.swp
+*.patch
