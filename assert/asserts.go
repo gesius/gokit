@@ -1,10 +1,8 @@
 package assert
 
-import "strconv"
-
-func NilReceiverCheck(r *interface{}) string {
+func NilReceiverCheck(r *interface{}) interface{} {
 	if r == nil {
 		return nil
 	}
-	return strconv.Itoa(r.n)
+	return r
 }

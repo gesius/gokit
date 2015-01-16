@@ -8,9 +8,8 @@ go:
  - tip
 
 env:
-  - FOO=foo BAR=bar
+  - $PATH=$PATH:$GOPATH/bin
 
 install:
-  - export $PATH=$PATH:$GOPATH/bin
   - go get github.com/tools/godep
   - godep restore

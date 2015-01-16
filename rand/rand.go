@@ -4,11 +4,12 @@ import (
 	"bytes"
 	"crypto/rand"
 	"encoding/binary"
-	"runtime"
-	"sync"
+	"strconv"
 )
 
-type RND struct{ n int32 }
+type RND struct {
+	n int32
+}
 
 func NewRND() *RND {
 	return &RND{n: 0}
@@ -20,14 +21,11 @@ func (r *RND) Rand() *RND {
 }
 
 func (r *RND) ToString() string {
-	if r == nil {
-		return nil
-	}
 	return strconv.Itoa(r.n)
 }
 
-func (r *RND) RandomString(p string s string) {
-	b := bytes.Buffer
+func (r *RND) RandomString(p string, s string) {
+	var b bytes.Buffer
 	n := NewRND().Rand().ToString()
 	buffer.WriteString(p)
 	buffer.WriteString(r.Rand().ToString())
