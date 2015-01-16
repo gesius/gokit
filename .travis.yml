@@ -8,17 +8,17 @@ go:
  - tip
 
 env:
-  - $PATHZZ=$PATH:$GOPATH/bin
+  - $PATHZZ=$PATH:$GOPATH/bin UNSAFESRC=/home/travis/gopath/src/github.com/gesius/gokit/unsafe
 
 before_install:
   - go install -race std
   - go get -v golang.org/x/tools/cmd/cover
   - go get github.com/kr/godep
-
+  - go tool cgo -cdefs $UNSAFESRC/defs_linux.go $UNSAFESRC/defs1_linux.go >$UNSAFESRC/defs_linux_amd64.h
 install:
   - export PATH=$HOME/gopath/bin:$PATH
   - go install -a -v -x ./...
-
+  
 #- go install -a -v -x ./...
 script:
   - go test -x -v ./...
