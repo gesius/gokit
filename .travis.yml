@@ -19,5 +19,5 @@ install:
   - export PATH=$HOME/gopath/bin:$PATH
 
 script:
-  - go test
+  - go test ./...
   - test -z "$(go fmt ./...)"
