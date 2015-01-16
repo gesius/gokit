@@ -1,6 +1,7 @@
 package rand
 
 import (
+	"bytes"
 	"crypto/rand"
 	"encoding/binary"
 	"runtime"
@@ -26,6 +27,7 @@ func (r *RND) ToString() string {
 }
 
 func (r *RND) RandomString(p string s string) {
+	b := bytes.Buffer
 	n := NewRND().Rand().ToString()
 	buffer.WriteString(p)
 	buffer.WriteString(r.Rand().ToString())
