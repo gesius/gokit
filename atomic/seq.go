@@ -4,21 +4,27 @@ import (
 	"sync/atomic"
 )
 
-type SEQNO_UINT64 struct {
-	N uint64
+//see: https://github.com/rcrowley/go-metrics/blob/master/counter.go
+type SEQNO struct {
+	n int64
+}
+
+func (s *SEQNO) get() int64 {
+	return atomic.LoadInt64(&s.n)
 }
 
 func (s *SEQNO) incr() {
-	atomic.AddUint64(&s.value, 1)
+	atomic.AddInt64(&s.n, 1)
 }
 
 func (s *SEQNO) decr() {
-	atomic.AddUint64(&s.value, -1)
+	atomic.AddInt64(&s.n, -1)
 }
 
 func NewSEQNO(name string) *SEQNO {
 
-	s := &SEQNO{N: 0}
+	s := &SEQNO{n: 0}
+	s.incr()
 
 	return s
 }

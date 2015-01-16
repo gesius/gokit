@@ -1,12 +1,9 @@
 package globals
 
 import (
-	"fmt"
-	"github.com/gesius/gokit/rand"
-	"github.com/gesius/gokit/topic"
-	"log"
-	"os"
 	"sync"
+
+	"github.com/gesius/gokit/topic"
 )
 
 // Registry for global accessible objects, options, functions and subscriptions
