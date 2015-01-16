@@ -8,8 +8,17 @@ go:
  - tip
 
 env:
-  - $PATH=$PATH:$GOPATH/bin
+  - $PATHZZ=$PATH:$GOPATH/bin
+
+before_install:
+  - go install -race std
+  - go get code.google.com/p/go.tools/cmd/cover
+  - go get github.com/kr/godep
+  - export PATH=$HOME/gopath/bin:$PATH
 
 install:
-  - go get github.com/tools/godep
   - godep restore
+
+script:
+  - go test
+  - test -z "$(go fmt ./...)"

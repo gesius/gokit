@@ -2,10 +2,10 @@ package globals
 
 import (
 	"fmt"
+	"github.com/gesius/gokit/rand"
+	"github.com/gesius/gokit/topic"
 	"log"
 	"os"
-	"ovs/kit/rand"
-	"ovs/kit/topic"
 	"sync"
 )
 

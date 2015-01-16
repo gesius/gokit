@@ -21,16 +21,16 @@ func (r *RND) Rand() *RND {
 }
 
 func (r *RND) ToString() string {
-	return strconv.Itoa(r.n)
+	return strconv.Itoa(int(r.n))
 }
 
-func (r *RND) RandomString(p string, s string) {
+func (r *RND) RandomString(p string, s string) string {
 	var b bytes.Buffer
-	n := NewRND().Rand().ToString()
-	buffer.WriteString(p)
-	buffer.WriteString(r.Rand().ToString())
-	buffer.WriteString(":")
-	buffer.WriteString(s)
 
-	return buffer.String()
+	b.WriteString(p)
+	b.WriteString(r.Rand().ToString())
+	b.WriteString(":")
+	b.WriteString(s)
+
+	return b.String()
 }
