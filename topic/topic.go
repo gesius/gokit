@@ -2,9 +2,7 @@ package topic
 
 import (
 	"container/list"
-	"crypto/rand"
-	"encoding/binary"
-	"ovs/kit/rand"
+	"github.com/gesius/gokit/rand"
 	"runtime"
 	"sync"
 )
@@ -30,7 +28,7 @@ type Topic struct {
 
 func NewTopic(name string, sum Summarize) (t *Topic) {
 	src := make(chan interface{})
-	tp = &Topic{name: NewRND().RandomString("topic:", name)}
+	tp := &Topic{name: rand.NewRND().RandomString("topic:", name)}
 	tp.publisher.src = src
 	tp.subscriber.sum = sum
 	tp.subscriber.group = make(map[int]*queue)
@@ -39,7 +37,7 @@ func NewTopic(name string, sum Summarize) (t *Topic) {
 }
 
 // Source returns the name of the event source.
-func (ps *Topic) Source() string {
+func (tp *Topic) Source() string {
 	return tp.name
 }
 
@@ -60,7 +58,7 @@ func (tp *Topic) Close() {
 	if tp.publisher.src == nil {
 		return
 	}
-	close(ps.publisher.src)
+	close(tp.publisher.src)
 	tp.publisher.src = nil
 }
 
@@ -100,7 +98,7 @@ func (tp *Topic) clunk() {
 func (tp *Topic) Subscribe() *Subscription {
 	tp.subscriber.Lock()
 	defer tp.subscriber.Unlock()
-	q := newQueue(ps, tp.subscriber.n)
+	q := newQueue(tp, tp.subscriber.n)
 	tp.subscriber.group[q.id] = q
 	tp.subscriber.n++
 	// Prefix subscription's input stream with a summary of all history until now
