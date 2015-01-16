@@ -1,7 +1,7 @@
 package seq
 
 import (
-	"github.com/gesius/gokit/atomic"
+	. "github.com/gesius/gokit/atomic"
 	"testing"
 )
 
